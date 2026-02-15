@@ -60,6 +60,7 @@ The following six classification algorithms were implemented:
 
 Among the six implemented models, XGBoost demonstrated the strongest overall performance on this dataset.
 
+
 Reasons:
 
 It effectively captures nonlinear relationships.
@@ -71,6 +72,7 @@ It performs well on structured tabular data.
 It achieved the highest balance between precision and recall.
 
 Random Forest also performed strongly and showed stable results, but XGBoost achieved slightly better overall performance metrics.
+
 
 Other observations:
 
