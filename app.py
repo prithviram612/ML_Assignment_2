@@ -1,3 +1,12 @@
+import streamlit as st
+import pandas as pd
+import os
+import joblib
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+from sklearn.metrics import classification_report, confusion_matrix
+from sklearn.preprocessing import LabelEncoder
 # ---------------------------------
 # Model Selection
 # ---------------------------------
@@ -16,7 +25,7 @@ model_choice = st.selectbox(
 run_button = st.button("OK")
 
 # ---------------------------------
-# Run Model Only After Button Click
+# Run Model After Button Click
 # ---------------------------------
 if run_button:
 
