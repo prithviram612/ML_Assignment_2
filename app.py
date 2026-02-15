@@ -55,10 +55,12 @@ model_choice = st.selectbox(
     ]
 )
 
+run_button = st.button("OK")
+
 # ---------------------------------
-# Run evaluation only after selection
+# Run Model Only When Button Clicked
 # ---------------------------------
-if model_choice:
+if run_button:
 
     # Load scaler
     scaler_path = "models/scaler.pkl"
@@ -83,11 +85,18 @@ if model_choice:
     predictions = model.predict(X_scaled)
 
     # ---------------------------------
-    # Display Results
+    # Classification Report as Table
     # ---------------------------------
     st.subheader("📄 Classification Report")
-    st.text(classification_report(y, predictions))
 
+    report = classification_report(y, predictions, output_dict=True)
+    report_df = pd.DataFrame(report).transpose()
+
+    st.dataframe(report_df)
+
+    # ---------------------------------
+    # Confusion Matrix (Compact)
+    # ---------------------------------
     st.subheader("📌 Confusion Matrix")
 
     cm = confusion_matrix(y, predictions)
