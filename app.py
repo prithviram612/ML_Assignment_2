@@ -56,60 +56,59 @@ model_choice = st.selectbox(
 )
 
 # ---------------------------------
-# Load Scaler
+# Run evaluation only after selection
 # ---------------------------------
-scaler_path = "models/scaler.pkl"
+if model_choice:
 
-if not os.path.exists(scaler_path):
-    st.error("Scaler file missing in models folder.")
-    st.stop()
+    # Load scaler
+    scaler_path = "models/scaler.pkl"
 
-scaler = joblib.load(scaler_path)
-X_scaled = scaler.transform(X)
+    if not os.path.exists(scaler_path):
+        st.error("Scaler file missing in models folder.")
+        st.stop()
 
-# ---------------------------------
-# Load Selected Model
-# ---------------------------------
-model_path = f"models/{model_choice}.pkl"
+    scaler = joblib.load(scaler_path)
+    X_scaled = scaler.transform(X)
 
-if not os.path.exists(model_path):
-    st.error(f"Model file '{model_choice}.pkl' not found.")
-    st.stop()
+    # Load selected model
+    model_path = f"models/{model_choice}.pkl"
 
-model = joblib.load(model_path)
+    if not os.path.exists(model_path):
+        st.error(f"Model file '{model_choice}.pkl' not found.")
+        st.stop()
 
-# ---------------------------------
-# Predictions
-# ---------------------------------
-predictions = model.predict(X_scaled)
+    model = joblib.load(model_path)
 
-# ---------------------------------
-# Display Results
-# ---------------------------------
-st.subheader("📄 Classification Report")
-st.text(classification_report(y, predictions))
+    # Predictions
+    predictions = model.predict(X_scaled)
 
-st.subheader("📌 Confusion Matrix")
+    # ---------------------------------
+    # Display Results
+    # ---------------------------------
+    st.subheader("📄 Classification Report")
+    st.text(classification_report(y, predictions))
 
-cm = confusion_matrix(y, predictions)
+    st.subheader("📌 Confusion Matrix")
 
-fig, ax = plt.subplots(figsize=(2, 2))
+    cm = confusion_matrix(y, predictions)
 
-sns.heatmap(
-    cm,
-    annot=True,
-    fmt='d',
-    cmap="Blues",
-    cbar=False,
-    annot_kws={"size": 8},
-    ax=ax
-)
+    fig, ax = plt.subplots(figsize=(2, 2))
 
-plt.tight_layout()
+    sns.heatmap(
+        cm,
+        annot=True,
+        fmt='d',
+        cmap="Blues",
+        cbar=False,
+        annot_kws={"size": 8},
+        ax=ax
+    )
 
-col1, col2, col3 = st.columns([2, 1, 2])
+    plt.tight_layout()
 
-with col2:
-    st.pyplot(fig, use_container_width=False)
+    col1, col2, col3 = st.columns([2, 1, 2])
 
-st.success("✅ Model evaluation completed successfully!")
+    with col2:
+        st.pyplot(fig, use_container_width=False)
+
+    st.success(f"✅ {model_choice} evaluation completed successfully!")
