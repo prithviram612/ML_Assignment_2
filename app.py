@@ -92,26 +92,20 @@ if uploaded_file is not None:
     st.subheader("📌 Confusion Matrix")
 
     cm = confusion_matrix(y, predictions)
-
-    fig, ax = plt.subplots(figsize=(0.8, 0.8))  # Much smaller
-
+    fig, ax = plt.subplots(figsize=(2, 2))
     sns.heatmap(
         cm,
         annot=True,
         fmt='d',
         cmap="Blues",
-        cbar=False,              # Remove colorbar
-        annot_kws={"size": 6},   # Smaller numbers
+        cbar=False,
+        annot_kws={"size": 8},
         ax=ax
     )
 
-    ax.set_xlabel("")
-    ax.set_ylabel("")
-    ax.set_xticks([])
-    ax.set_yticks([])
-
     plt.tight_layout()
+    col1, col2, col3 = st.columns([1, 2, 1])
 
-    st.pyplot(fig)
-
+    with col2:
+        st.pyplot(fig, use_container_width=False)
     st.success("✅ Model evaluation completed successfully!")
