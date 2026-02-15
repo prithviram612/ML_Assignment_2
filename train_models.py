@@ -1,10 +1,10 @@
 import pandas as pd
-import numpy as np
+import os
 import joblib
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, recall_score, f1_score, matthews_corrcoef, confusion_matrix
+from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, recall_score, f1_score, matthews_corrcoef
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
@@ -13,58 +13,56 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.ensemble import RandomForestClassifier
 from xgboost import XGBClassifier
 
-# -------------------------
-# Load Dataset
-# -------------------------
-df = pd.read_csv("bank.csv", sep=";", quotechar='"')
+# Create models folder
+if not os.path.exists("models"):
+    os.makedirs("models")
 
-# -------------------------
-# Encode Categorical Columns
-# -------------------------
-le = LabelEncoder()
+# Load dataset
+df = pd.read_csv("bank.csv", sep=';')
+df.columns = df.columns.str.strip()
+
+# Encode categorical features
 for col in df.columns:
     if df[col].dtype == 'object':
-        df[col] = le.fit_transform(df[col])
+        df[col] = LabelEncoder().fit_transform(df[col])
 
-# -------------------------
-# Split Features & Target
-# -------------------------
 X = df.drop("y", axis=1)
 y = df["y"]
 
-# -------------------------
-# Train Test Split
-# -------------------------
+# Train test split
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# -------------------------
 # Scaling
-# -------------------------
 scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test)
 
-# -------------------------
-# Models Dictionary
-# -------------------------
+joblib.dump(scaler, "models/scaler.pkl")
+
+# Define models
 models = {
-    "Logistic Regression": LogisticRegression(max_iter=1000),
-    "Decision Tree": DecisionTreeClassifier(),
-    "KNN": KNeighborsClassifier(),
-    "Naive Bayes": GaussianNB(),
-    RandomForestClassifier(n_estimators=30,max_depth=8,random_state=42),
-    "XGBoost": XGBClassifier(use_label_encoder=False, eval_metric='logloss')
+    "Logistic_Regression": LogisticRegression(max_iter=1000),
+    "Decision_Tree": DecisionTreeClassifier(max_depth=8),
+    "KNN": KNeighborsClassifier(n_neighbors=5),
+    "Naive_Bayes": GaussianNB(),
+    "Random_Forest": RandomForestClassifier(
+        n_estimators=30,
+        max_depth=8,
+        random_state=42
+    ),
+    "XGBoost": XGBClassifier(
+        n_estimators=50,
+        max_depth=5,
+        eval_metric='logloss'
+    )
 }
 
 results = []
-
-# -------------------------
-# Training and Evaluation
-# -------------------------
 for name, model in models.items():
     model.fit(X_train, y_train)
+
     y_pred = model.predict(X_test)
     y_prob = model.predict_proba(X_test)[:, 1]
 
@@ -77,13 +75,9 @@ for name, model in models.items():
 
     results.append([name, acc, auc, prec, rec, f1, mcc])
 
-    joblib.dump(model, f"models/{safe_name}.pkl", compress=9)
-    
-# -------------------------
-# Show Results Table
-# -------------------------
-results_df = pd.DataFrame(results, columns=[
-    "Model", "Accuracy", "AUC", "Precision", "Recall", "F1 Score", "MCC"
-])
+    joblib.dump(model, f"models/{name}.pkl", compress=3)
 
+results_df = pd.DataFrame(results, columns=[
+    "Model", "Accuracy", "AUC", "Precision", "Recall", "F1", "MCC"
+])
 print(results_df)
