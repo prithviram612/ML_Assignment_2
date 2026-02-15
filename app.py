@@ -88,15 +88,29 @@ if uploaded_file is not None:
     st.subheader("📄 Classification Report")
     st.text(classification_report(y, predictions))
 
-    # Smaller Confusion Matrix
+    # Confusion Matrix
     st.subheader("📌 Confusion Matrix")
 
     cm = confusion_matrix(y, predictions)
 
-    fig, ax = plt.subplots(figsize=(2, 2))  # Reduced size
-    sns.heatmap(cm, annot=True, fmt='d', cmap="Blues", ax=ax)
-    ax.set_xlabel("Predicted")
-    ax.set_ylabel("Actual")
+    fig, ax = plt.subplots(figsize=(1.5, 1.5))  # Much smaller
+
+    sns.heatmap(
+        cm,
+        annot=True,
+        fmt='d',
+        cmap="Blues",
+        cbar=False,              # Remove colorbar
+        annot_kws={"size": 6},   # Smaller numbers
+        ax=ax
+    )
+
+    ax.set_xlabel("")
+    ax.set_ylabel("")
+    ax.set_xticks([])
+    ax.set_yticks([])
+
+    plt.tight_layout()
 
     st.pyplot(fig)
 
