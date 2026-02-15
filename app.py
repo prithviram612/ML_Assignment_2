@@ -23,12 +23,22 @@ model_choice = st.selectbox(
 )
 
 if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
+    df = pd.read_csv(uploaded_file, sep=';')
+    df.columns = df.columns.str.strip()
 
-    model = joblib.load(f"models/{model_choice}.pkl")
+    # Check if y column exists
+    if "y" not in df.columns:
+    st.error("Target column 'y' not found in uploaded dataset.")
+    st.write("Columns detected:", df.columns)
+    st.stop()
 
-    X = df.drop("y", axis=1)
-    y = df["y"]
+    # Encode categorical columns
+    for col in df.columns:
+        if df[col].dtype == 'object':
+            df[col] = LabelEncoder().fit_transform(df[col])
+
+X = df.drop("y", axis=1)
+y = df["y"]
 
     predictions = model.predict(X)
 
