@@ -28,9 +28,9 @@ if uploaded_file is not None:
 
     # Check if y column exists
     if "y" not in df.columns:
-    st.error("Target column 'y' not found in uploaded dataset.")
-    st.write("Columns detected:", df.columns)
-    st.stop()
+        st.error("Target column 'y' not found in uploaded dataset.")
+        st.write("Columns detected:", df.columns)
+        st.stop()
 
     # Encode categorical columns
     for col in df.columns:
