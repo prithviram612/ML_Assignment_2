@@ -18,10 +18,10 @@ st.title("📊 Bank Marketing Classification Dashboard")
 # ---------------------------------
 # Upload Dataset
 # ---------------------------------
-uploaded_file = st.file_uploader("Upload bank.csv file", type=["csv"])
+uploaded_file = st.file_uploader("Upload csv file", type=["csv"])
 
 if uploaded_file is None:
-    st.warning("Please upload the bank.csv file to continue.")
+    st.warning("Please upload the csv file to continue.")
     st.stop()
 
 # Load dataset
