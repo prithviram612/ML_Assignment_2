@@ -93,7 +93,7 @@ if uploaded_file is not None:
 
     cm = confusion_matrix(y, predictions)
 
-    fig, ax = plt.subplots(figsize=(1.5, 1.5))  # Much smaller
+    fig, ax = plt.subplots(figsize=(0.8, 0.8))  # Much smaller
 
     sns.heatmap(
         cm,
