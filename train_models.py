@@ -54,7 +54,7 @@ models = {
     "Decision Tree": DecisionTreeClassifier(),
     "KNN": KNeighborsClassifier(),
     "Naive Bayes": GaussianNB(),
-    "Random Forest": RandomForestClassifier(),
+    RandomForestClassifier(n_estimators=30,max_depth=8,random_state=42),
     "XGBoost": XGBClassifier(use_label_encoder=False, eval_metric='logloss')
 }
 
@@ -77,8 +77,8 @@ for name, model in models.items():
 
     results.append([name, acc, auc, prec, rec, f1, mcc])
 
-    joblib.dump(model, f"models/{name}.pkl")
-
+    joblib.dump(model, f"models/{safe_name}.pkl", compress=9)
+    
 # -------------------------
 # Show Results Table
 # -------------------------
