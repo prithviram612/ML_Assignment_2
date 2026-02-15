@@ -4,11 +4,15 @@ Predict whether a bank client will subscribe to a term deposit.
 
 2. Dataset Description
 
-16 input features
+The dataset used for this project is the Bank Marketing Dataset obtained from the UCI Machine Learning Repository. This dataset contains information related to direct marketing campaigns conducted by a Portuguese banking institution. The objective of the dataset is to predict whether a client will subscribe to a term deposit based on various personal and campaign-related attributes.
 
-4000+ instances
+The dataset consists of 45,211 instances and 16 input features, along with one target variable. The target variable, labeled as "y", indicates whether the client subscribed to a term deposit ("yes") or not ("no"). Therefore, this is a binary classification problem.
 
-Binary target variable
+The dataset includes both numerical and categorical features. Numerical features include attributes such as age, balance, duration, campaign, pdays, and previous. Categorical features include job type, marital status, education level, contact type, month of contact, and previous campaign outcome.
+
+Before model training, categorical variables were encoded into numerical form, and feature scaling was applied to ensure uniformity across models that are sensitive to feature magnitude.
+
+This dataset satisfies the assignment requirements as it contains more than 500 instances and more than 12 features. It is suitable for evaluating multiple classification algorithms due to its real-world complexity and class imbalance characteristics.
 
 3. Models Used
 
@@ -27,16 +31,14 @@ Binary target variable
 
 4. Observations
 
-Write:
+  a. Logistic Regression performed well for linear separation.
 
-Logistic Regression performed well for linear separation.
+  b. Decision Tree showed slight overfitting.
 
-Decision Tree showed slight overfitting.
+  c. KNN was sensitive to scaling.
 
-KNN was sensitive to scaling.
+  d. Naive Bayes performed decently despite independence assumption.
 
-Naive Bayes performed decently despite independence assumption.
+  e. Random Forest improved stability.
 
-Random Forest improved stability.
-
-XGBoost achieved highest AUC score.
+  f. XGBoost achieved highest AUC score.
