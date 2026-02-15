@@ -1,20 +1,45 @@
-1. Problem Statement
+**1. Problem Statement**
 
-Predict whether a bank client will subscribe to a term deposit.
+The objective of this project is to implement and compare six classification algorithms on a real-world dataset. The task is to predict whether a bank client will subscribe to a term deposit based on demographic and campaign-related features.
 
-2. Dataset Description
+The project includes:
 
-The dataset used for this project is the Bank Marketing Dataset obtained from the UCI Machine Learning Repository. This dataset contains information related to direct marketing campaigns conducted by a Portuguese banking institution. The objective of the dataset is to predict whether a client will subscribe to a term deposit based on various personal and campaign-related attributes.
+Implementation of six machine learning models
 
-The dataset consists of 45,211 instances and 16 input features, along with one target variable. The target variable, labeled as "y", indicates whether the client subscribed to a term deposit ("yes") or not ("no"). Therefore, this is a binary classification problem.
+Evaluation using multiple performance metrics
 
-The dataset includes both numerical and categorical features. Numerical features include attributes such as age, balance, duration, campaign, pdays, and previous. Categorical features include job type, marital status, education level, contact type, month of contact, and previous campaign outcome.
+Comparison of model performance
 
-Before model training, categorical variables were encoded into numerical form, and feature scaling was applied to ensure uniformity across models that are sensitive to feature magnitude.
+Deployment of a Streamlit-based interactive dashboard
 
-This dataset satisfies the assignment requirements as it contains more than 500 instances and more than 12 features. It is suitable for evaluating multiple classification algorithms due to its real-world complexity and class imbalance characteristics.
+**2. Dataset Description**
 
-3. Models Used
+The objective of this project is to implement and compare six classification algorithms on a real-world dataset. The task is to predict whether a bank client will subscribe to a term deposit based on demographic and campaign-related features.
+
+The project includes:
+
+Implementation of six machine learning models
+
+Evaluation using multiple performance metrics
+
+Comparison of model performance
+
+Deployment of a Streamlit-based interactive dashboard
+
+**3. Models Used**
+The following six classification algorithms were implemented:
+
+1. Logistic Regression
+
+2. Decision Tree
+
+3. K-Nearest Neighbors (KNN)
+
+4. Naive Bayes
+
+5. Random Forest
+
+6. XGBoost
 
                  Model  Accuracy       AUC  Precision    Recall        F1       MCC
    
@@ -30,7 +55,23 @@ This dataset satisfies the assignment requirements as it contains more than 500 
 
 5              XGBoost  0.908437  0.931857   0.667090  0.481210  0.559105  0.517977
 
-4. Observations
+**4. Observations**
+
+Among the six implemented models, XGBoost demonstrated the strongest overall performance on this dataset.
+
+Reasons:
+
+It effectively captures nonlinear relationships.
+
+It handles complex feature interactions.
+
+It performs well on structured tabular data.
+
+It achieved the highest balance between precision and recall.
+
+Random Forest also performed strongly and showed stable results, but XGBoost achieved slightly better overall performance metrics.
+
+Other observations:
 
   a. Logistic Regression performed well for linear separation.
 
@@ -39,7 +80,3 @@ This dataset satisfies the assignment requirements as it contains more than 500 
   c. KNN was sensitive to scaling.
 
   d. Naive Bayes performed decently despite independence assumption.
-
-  e. Random Forest improved stability.
-
-  f. XGBoost achieved highest AUC score.
