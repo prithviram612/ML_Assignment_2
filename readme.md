@@ -27,6 +27,7 @@ Comparison of model performance
 Deployment of a Streamlit-based interactive dashboard
 
 **3. Models Used**
+
 The following six classification algorithms were implemented:
 
 1. Logistic Regression
