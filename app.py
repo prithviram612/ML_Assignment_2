@@ -7,6 +7,11 @@ import matplotlib.pyplot as plt
 
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.preprocessing import LabelEncoder
+
+st.set_page_config(page_title="Bank Marketing ML App", layout="wide")
+
+st.title("📊 Bank Marketing Classification Dashboard")
+
 # ---------------------------------
 # Model Selection
 # ---------------------------------
